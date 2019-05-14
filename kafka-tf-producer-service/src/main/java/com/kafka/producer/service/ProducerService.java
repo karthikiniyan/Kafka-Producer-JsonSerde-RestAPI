@@ -1,10 +1,9 @@
 package com.kafka.producer.service;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,34 +25,48 @@ public class ProducerService {
 	}
 
 	public void sendMessage() {
-		String topic ="test1";
+		String topic = "meenatopic";
 
-		try {
+		File file = new File("C:/KafkaProd/");
+		File[] files = file.listFiles();
+		for (File f : files) {
+			System.out.println(f.getName());
+			String fileName = f.getName();
+			FileInputStream fis;
+			try {
 
-			File f = new File("src/main/resources/filestoPost/postKafkaTopicLineByLine");
+				fis = new FileInputStream("C:/KafkaProd/" + fileName);
+				byte[] filevalue = new byte[(int) file.length()];
+				fis.read(filevalue);
+				fis.close();
 
-			List<String> lines = FileUtils.readLines(f, "UTF-8");
+				String filecontent = new String(filevalue, "UTF-8");
 
-			for (String message : lines) {
-				System.out.println("message : " + message);
-				kafkaTemplate.send(topic, message)
-						.addCallback(new ListenableFutureCallback<SendResult<Integer, String>>() {
+				System.out.println(filecontent);
 
-							@Override
-							public void onSuccess(final SendResult<Integer, String> result) {
-								LOGGER.info("sent message='{}' with offset={}", message,
-										result.getRecordMetadata().offset());
-							}
+				{
+					System.out.println("message : " + filecontent);
+					kafkaTemplate.send(topic, filecontent)
+							.addCallback(new ListenableFutureCallback<SendResult<Integer, String>>() {
 
-							@Override
-							public void onFailure(final Throwable exc) {
-								LOGGER.error("unable to send message='{}'", message, exc);
-							}
-						});
+								@Override
+								public void onSuccess(final SendResult<Integer, String> result) {
+									LOGGER.info("sent message='{}' with offset={}", filecontent,
+											result.getRecordMetadata().offset());
+								}
+
+								@Override
+								public void onFailure(final Throwable exc) {
+									LOGGER.error("unable to send message='{}'", filecontent, exc);
+								}
+							});
+				}
+
+			} catch (IOException e) {
+
+				e.printStackTrace();
+
 			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 
 	}
