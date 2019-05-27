@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: kafka-tf-producer-service
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: jsanthan
+Built-By: 12499
 Implementation-Vendor-Id: com.kafka.producer
-Build-Jdk: 1.8.0_171
+Build-Jdk: 1.8.0_211
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/kafka-tf-producer-service
 Created-By: Maven Integration for Eclipse

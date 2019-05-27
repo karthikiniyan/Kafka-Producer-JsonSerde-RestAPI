@@ -22,27 +22,17 @@ public class ProducerService {
 	}
 
 	public void sendMessage() {
-		String topic = "meenatopic";
+		String topic = "Streams_input";
 		
-		/*
-		 * File file = new File("C:/KafkaProd/"); File[] files = file.listFiles(); for
-		 * (File f : files) { System.out.println(f.getName()); String fileName =
-		 * f.getName(); FileInputStream fis; try {
-		 * 
-		 * fis = new FileInputStream("C:/KafkaProd/" + fileName); byte[] filevalue = new
-		 * byte[(int) file.length()]; fis.read(filevalue); fis.close();
-		 * 
-		 * String filecontent = new String(filevalue, "UTF-8");
-		 * 
-		 * System.out.println(filecontent);
-		 */
+	
 		for (Weather weather : CountryEnum.getCountryList()) {
 
 			try {
 				Thread.sleep(2000);
 				System.out.println("sending data='{}' to topic='{}'" + weather.toString() + "" + topic);
 				Message<Weather> message = MessageBuilder.withPayload(weather).setHeader(KafkaHeaders.TOPIC, topic)
-						.build();
+						.setHeader(KafkaHeaders.MESSAGE_KEY, weather.getCountry()).build();
+				
 				this.kafkaTemplate.send(message);
 
 			} catch (Exception e) {

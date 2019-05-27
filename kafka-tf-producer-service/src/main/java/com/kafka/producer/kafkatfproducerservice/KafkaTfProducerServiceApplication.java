@@ -10,6 +10,7 @@ public class KafkaTfProducerServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(KafkaTfProducerServiceApplication.class, args);
+		
 	}
 
 }
