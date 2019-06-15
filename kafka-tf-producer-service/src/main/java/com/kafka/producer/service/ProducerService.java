@@ -20,22 +20,27 @@ public class ProducerService {
 	public ProducerService(KafkaTemplate<String,Weather> kafkaTemplate) {
 		this.kafkaTemplate = kafkaTemplate;
 	}
+	
+	@Autowired
+	private WeatherReportUtil weather;
 
 	public void sendMessage() {
-		String topic = "Streams_input";
 		
-	
-		for (Weather weather : CountryEnum.getCountryList()) {
-
-			try {
-				Thread.sleep(2000);
-				System.out.println("sending data='{}' to topic='{}'" + weather.toString() + "" + topic);
-				Message<Weather> message = MessageBuilder.withPayload(weather).setHeader(KafkaHeaders.TOPIC, topic)
-						.setHeader(KafkaHeaders.MESSAGE_KEY, weather.getCountry()).build();
-				
+		String topic = "Streams_input";
+			
+		try {
+		for (String city : CityConstant.CITY) {
+			Weather wea=weather.getWeatherReport(city.trim());
+			//Thread.sleep(1000);
+			if(wea != null) {
+			System.out.println("sending data='{}' to topic='{}'" + wea.toString() + "" + topic);
+				Message<Weather> message = MessageBuilder.withPayload(wea).setHeader(KafkaHeaders.TOPIC, topic)
+						.setHeader(KafkaHeaders.MESSAGE_KEY, wea.getCity()).build();
 				this.kafkaTemplate.send(message);
-
-			} catch (Exception e) {
+			}
+			} 
+		}
+		catch (Exception e) {
 
 				e.printStackTrace();
 
@@ -44,4 +49,4 @@ public class ProducerService {
 
 	}
 
-}
+

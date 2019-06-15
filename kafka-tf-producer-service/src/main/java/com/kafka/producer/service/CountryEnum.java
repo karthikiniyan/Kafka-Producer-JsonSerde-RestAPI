@@ -5,14 +5,14 @@ import java.util.List;
 
 public enum CountryEnum {
 
-	CHENNAI("India", "tamil nadu", "Chennai", 101.1), VELLOR("India", "tamil nadu", "vellor", 105.0),
-	KOVAI("India", "tamil nadu", "kovai", 92.1), TUTICORIN("India", "tamil nadu", "tuticorin", 105.0),
-	MADURAI("India", "tamil nadu", "madurai", 101.1), SALEM("India", "tamil nadu", "salem", 105.0),
-	Namakkal("India", "tamil nadu", "Namakkal", 101.1), Pammal("India", "tamil nadu", "pammal", 115.8),
-	tambaram("India", "tamil nadu", "tambaram", 103.1), medavakkam("India", "tamil nadu", "medavakkam", 96.0),
-	mouniya("SRILANKA", "tamil", "mouniya", 103.1), mullivaykal("SRILANKA", "tamil", "mullivaykal", 116.8),
-	Jayawardenepura("SRILANKA", "Kolumbu", "Jayawardenepura", 106.1),
-	mattakalapu("SRILANKA", "kolumbu", "mattakalapu", 94.0);
+	CHENNAI("India", "tamil nadu", "Chennai", 103.1),
+	VELLOR("India", "tamil nadu", "vellor", 108.0),
+	KOVAI("India", "tamil nadu", "kovai", 92.1),
+	TUTICORIN("India", "tamil nadu", "tuticorin", 108.0),
+	MADURAI("India", "tamil nadu", "madurai", 109.1),
+	SALEM("India", "tamil nadu", "salem", 102.0),
+	mattakalapu("SRILANKA", "kolumbu", "mattakalapu", 99.0);
+	
 
 	private String country;
 	private String state;
